@@ -3,4 +3,6 @@ function drawSchedule(a_kfu,d_kfu,dw_kfu,K,U){
 }
 
 
-function draw_frame()
+function draw_frame(){
+	
+}
