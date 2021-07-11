@@ -8,6 +8,9 @@ let K=6;
 let F=2;
 let U=7;
 
+//定义空闲车底数
+let AvailableCars_f=[null,3,3];//[空,上行,下行]
+
 //分析从表格读取的数据并转换为格式化数据 value2Number=>将值转换为数字(不推荐使用)boolean
 function analyseFormData2FormatData(fileData,K,F,U,value2Number){
 
@@ -95,7 +98,7 @@ function analyseFormData2FormatData(fileData,K,F,U,value2Number){
 	let now_k=1;
 	let now_f=1;
 
-	drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,4000);
+	drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,3900,AvailableCars_f);
 }
 
 
