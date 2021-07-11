@@ -36,7 +36,34 @@ function draw_line(spot,epot,color,width){
 	ctx.stroke(); //绘制路径。
 }
 
-//画一条连续的线
+ 
+//求斜边长度
+function getBeveling(x,y)
+{
+	return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+}
+//画虚线
+function draw_dashLine(spot,epot,dashLen)
+{
+	dashLen=dashLen||1;
+	let x1=spot.x;
+	let y1=spot.y;
+	let x2=epot.x;
+	let y2=epot.y;
+
+	//得到斜边的总长度
+	var beveling = getBeveling(x2-x1,y2-y1);
+	//计算有多少个线段
+	var num = Math.floor(beveling/dashLen);
+	
+	for(var i = 0 ; i < num; i++)
+	{
+		ctx[i%2 == 0 ? 'moveTo' : 'lineTo'](x1+(x2-x1)/num*i,y1+(y2-y1)/num*i);
+	}
+	ctx.stroke();
+}
+
+//画一条连续的折线
 function draw_lines(potList,color,width,closePath){
 	setBrush(null,color,width);
 	ctx.beginPath();
@@ -57,10 +84,24 @@ function draw_lines(potList,color,width,closePath){
 }
 
 //画矩形 style指颜色
-function draw_Rect(spot,epot,fillColor){
+function draw_rect(spot,epot,fillColor){
 	setBrush(fillColor);
 
     ctx.fillRect (spot.x, spot.y, epot.x, epot.y);
+}
+
+//写字
+function draw_text(text,pot,textBaseline,textAlign,font,border,fill){
+	//textBaseline https://www.w3school.com.cn/tags/canvas_textbaseline.asp
+	fill=fill||"#000";
+	setBrush(fill,border);
+	ctx.font = font||'1.5rem 微软雅黑';
+	ctx.textBaseline=textBaseline||"top";
+	ctx.textAlign=textAlign||"center";
+	ctx.fillText (text, pot.x,pot.y);
+
+
+	
 }
 
 //调整画板大小

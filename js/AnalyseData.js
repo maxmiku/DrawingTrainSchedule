@@ -18,7 +18,7 @@ let formData_format={};//格式化后的数据存放在这里
 for (let formKey in fileData){
 	let formData=fileData[formKey];
 	let formRowLength=formData.length;
-	console.log("选中表",formKey,"表行数",formRowLength);
+	// console.log("选中表",formKey,"表行数",formRowLength);
 
 
 
@@ -68,25 +68,27 @@ console.log("处理结束后数据",formData_format);
 
 
 
-var a_kfu=createNDimArray([K+1,F+1,U+1]);
-formData_format2NDimArray(a_kfu,formData_format["a_kfu"]);
+let a_kfu_i=createNDimArray([K+1,F+1,U+1]);
+formData_format2NDimArray(a_kfu_i,formData_format["a_kfu_i"]);
 
-console.log(a_kfu);
-console.log(a_kfu[4][1][4])
-
-
-var d_kfu=createNDimArray([K+1,F+1,U+1]);
-formData_format2NDimArray(d_kfu,formData_format["d_kfu"]);
-
-console.log(d_kfu);
-console.log(d_kfu[4][1][4])
+// console.log(a_kfu_i);
+// console.log(a_kfu_i[4][1][4])
 
 
-var dw_kfu=createNDimArray([K+1,F+1,U+1]);
-formData_format2NDimArray(dw_kfu,formData_format["dw_kfu"]);
+let d_kfu_i=createNDimArray([K+1,F+1,U+1]);
+formData_format2NDimArray(d_kfu_i,formData_format["d_kfu_i"]);
 
-console.log(dw_kfu);
-console.log(dw_kfu[4][1][4])
+// console.log(d_kfu_i);
+// console.log(d_kfu_i[4][1][4])
+
+
+let dw_kfu_i=createNDimArray([K+1,F+1,U+1]);
+formData_format2NDimArray(dw_kfu_i,formData_format["dw_kfu_i"]);
+
+// console.log(dw_kfu_i);
+// console.log(dw_kfu_i[4][1][4])
 
 let now_k=1;
 let now_f=1;
+
+drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,4000);
