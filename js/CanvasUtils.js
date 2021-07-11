@@ -72,7 +72,7 @@ function draw_lines(potList,color,width,closePath){
 	ctx.moveTo(spot.x,spot.y); //把画笔移动到指定的坐标
 
 	for(var i=1;i<potList.length;i++){
-		console.log(potList[i]);
+		// console.log(potList[i]);
 		var tpot=potList[i];
 		ctx.lineTo(tpot.x,tpot.y);  //绘制一条从当前位置到指定坐标(200, 50)的直线.
 
@@ -112,6 +112,31 @@ function resize_canvas(w,h){
 	ctx.putImageData(imgData,0,0);
 }
 
+//导图图片
+function exportImage(){
+
+	var bloburl = canvas.toDataURL("image/jpeg",1);
+	// console.log('bloburl', bloburl);
+	var anchor = document.createElement('a');
+	if ('download' in anchor) {
+		anchor.style.visibility = 'hidden';
+		anchor.href = bloburl;
+
+		var myDate = new Date();
+
+		anchor.download = "导出_列车运行图"+(myDate.getMonth()+1)+"-"+myDate.getDate()+" "+myDate.getHours()+"-"+myDate.getMinutes()+"-"+myDate.getSeconds();
+		
+		document.body.appendChild(anchor);
+		var evt = document.createEvent('MouseEvents');
+		evt.initEvent('click', true, true);
+		anchor.dispatchEvent(evt);
+		
+		document.body.removeChild(anchor);
+	} else {
+		location.href = bloburl;
+	}
+
+}
 
 function test(){
 	draw_Rect(pot(0,0),pot(2000,3000));
