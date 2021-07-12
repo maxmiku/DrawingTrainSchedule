@@ -38,3 +38,20 @@ function arrayConversionStr2Int(arr){
 
 // a[1][0][2]="hi";
 // console.log(a)
+
+//数组除重
+function arrayDeduplication(inarr){  
+	var h={};    //定义一个hash表  
+	var arr=[];  //定义一个临时数组  
+	  
+	for(var i = 0; i < inarr.length; i++){    //循环遍历当前数组  
+		//对元素进行判断，看是否已经存在表中，如果存在则跳过，否则存入临时数组  
+		if(!h[inarr[i]]){  
+			//存入hash表  
+			h[inarr[i]] = true;  
+			//把当前数组元素存入到临时数组中  
+			arr.push(inarr[i]);  
+		}  
+	}  
+	return arr;  
+}  

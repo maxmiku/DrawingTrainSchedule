@@ -91,15 +91,25 @@ function draw_rect(spot,epot,fillColor){
 }
 
 //写字
-function draw_text(text,pot,textBaseline,textAlign,font,border,fill){
+function draw_text(text,pot,textBaseline,textAlign,font,border,fill,rotateDeg){
 	//textBaseline https://www.w3school.com.cn/tags/canvas_textbaseline.asp
+
 	fill=fill||"#000";
 	setBrush(fill,border);
 	ctx.font = font||'1.5rem 微软雅黑';
 	ctx.textBaseline=textBaseline||"top";
 	ctx.textAlign=textAlign||"center";
-	ctx.fillText (text, pot.x,pot.y);
 
+	if(rotateDeg!=null){
+		ctx.translate(pot.x,pot.y);//设置原点
+		ctx.rotate(rotateDeg*Math.PI/180);
+		ctx.fillText (text, 0,0);
+		ctx.rotate(-rotateDeg*Math.PI/180);//还原原点及角度
+		ctx.translate(-pot.x,-pot.y);
+
+	}else{
+		ctx.fillText (text, pot.x,pot.y);
+	}
 
 	
 }
@@ -137,6 +147,19 @@ function exportImage(){
 	}
 
 }
+
+//旋转画布
+function draw_rotate(deg,centerPot){
+	ctx.translate(centerPot.x,centerPot.y);//设置原点
+	ctx.rotate(deg*Math.PI/180);
+	
+}
+
+//重置画布位置
+function draw_rotate_restore(){
+	ctx.restore();
+}
+
 
 function test(){
 	draw_Rect(pot(0,0),pot(2000,3000));
