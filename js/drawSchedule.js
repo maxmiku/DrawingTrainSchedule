@@ -110,6 +110,17 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,canvasI
 		schDraw_carEnd(availableCars_upward_pot[i]);
 	}
 
+    $("#btn-analyse").addClass("btn-outline-primary");
+    $("#btn-analyse").removeClass("btn-success");
+
+    $("#btn-export").addClass("btn-success");
+    $("#btn-export").removeClass("btn-outline-secondary");
+
+
+    $("#btn-upload").addClass("btn-primary");
+    $("#btn-upload").removeClass("btn-outline-primary");
+
+
 
 }
 

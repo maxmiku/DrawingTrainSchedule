@@ -2,18 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Excel批量处理</title>
+    <title>列车运行图生成工具</title>
     <script src="./js/jquery.js"></script>
     <script src="./js/xlsx.core.min.js"></script>
     <script src="./js/Utils.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 </head>
-<body style="background-color: #aaa">
-<input type="file" id="excel-file"/>
-<button onclick="javascript:exportImage()">导出图片</button>
+<body>
+<div class="card mb-3 mt-2" style="left:1%;width: 98%">
+  <div class="card-body">
+    <h5 class="card-title">设置参数</h5>
+    <h6 class="card-subtitle mb-2 text-muted">在这里您可以设置绘制列车运行图的相关参数。</h6>
+    <div class="input-group mb-3">
+	  <span class="input-group-text" id="basic-addon1">车次数K</span>
+	  <input type="text" id="input_k" class="form-control" placeholder="请设置K值 默认11" aria-label="请设置K值 默认11" aria-describedby="basic-addon1">
+	  <span class="input-group-text" id="basic-addon1">车站数U</span>
+	  <input type="text" id="input_u" class="form-control" placeholder="请设置U值 默认7" aria-label="请设置U值 默认7" aria-describedby="basic-addon1">
+	  <span class="input-group-text" id="basic-addon1">ALL_TIME</span>
+	  <input type="text" id="input_at" class="form-control" placeholder="请设置列车运行图的时间 默认5200" aria-label="请设置列车运行图的时间 默认5200" aria-describedby="basic-addon1">
+	</div>
+	<div class="input-group mb-3">
+	  
+	  <span class="input-group-text" id="basic-addon1">上行可用车底数AvailableCars_f</span>
+	  <input type="text" id="input_ac1" class="form-control" placeholder="请设置上行值 默认6" aria-label="请设置上行值 默认6" aria-describedby="basic-addon1">
+	  <span class="input-group-text" id="basic-addon1">下行可用车底数</span>
+
+	  <input type="text" id="input_ac2" class="form-control" placeholder="请设置下行值 默认6" aria-label="请设置下行值 默认6" aria-describedby="basic-addon1">
+	</div>
+  </div>
+</div>
+<!-- 参数输入框 -->
+
+
+<div class="mb-3 col-md-offset-4 col-lg-offset-4col-xl-offset-4" role="group" aria-label="Basic mixed styles example" style="text-align:center">
+  <input type="file" class="form-control" id="excel-file" aria-describedby="inputGroupFileAddon04" aria-label="Upload" style="display: none">
+  <button type="button" id="btn-upload" class="btn btn-success" onclick="resetBtn();$('#excel-file').click();">选择文件</button>
+  <button type="button" id="btn-analyse" class="btn btn-outline-secondary" onclick="javascript:startAnalyse()">绘制运行图</button>
+  <button type="button" id="btn-export" class="btn btn-outline-secondary" onclick="javascript:exportImage()">导出图片</button>
+</div>
+
 <br/>
+
 <canvas id="tutorial" style="background-color: #fff">
     你的浏览器不支持 canvas，请升级你的浏览器。
 </canvas>
+
+
+
+
 
 
 </body>
@@ -23,5 +59,6 @@
 <script src="./js/Data.js"></script>
 <script src="./js/drawSchedule.js"></script>
 <script src="./js/AnalyseData.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 
 

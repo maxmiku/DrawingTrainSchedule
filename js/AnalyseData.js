@@ -4,12 +4,61 @@ var fileData = data;
 
 
 //预定义范围 从1开始
-let K=6;
+let K=11;
 let F=2;
 let U=7;
 
+let ALL_TIME=5200;
+
 //定义空闲车底数
-let AvailableCars_f=[null,3,3];//[空,上行,下行]
+let AvailableCars_f=[null,6,6];//[空,上行,下行]
+
+function startAnalyse(){
+	if(GformData==null){
+		alert("请选择文件");
+		return;
+	}
+	if($("#input_k").val()!="") K=Number($("#input_k").val());
+	if($("#input_u").val()!="") U=Number($("#input_u").val());
+	if($("#input_at").val()!="") ALL_TIME=Number($("#input_at").val());
+	if($("#input_ac1").val()!="") AvailableCars_f[1]=Number($("#input_ac1").val());
+	if($("#input_ac2").val()!="") AvailableCars_f[2]=Number($("#input_ac2").val());
+	
+	
+
+	setCookie("K",K);
+	setCookie("U",U);
+	setCookie("ALL_TIME",ALL_TIME);
+	setCookie("AvailableCars_f[1]",AvailableCars_f[1]);
+	setCookie("AvailableCars_f[2]",AvailableCars_f[2]);
+
+	$("#input_k").val(K);
+	$("#input_u").val(U);
+	$("#input_at").val(ALL_TIME);
+	$("#input_ac1").val(AvailableCars_f[1]);
+	$("#input_ac2").val(AvailableCars_f[2]);
+
+    analyseFormData2FormatData(GformData,K,F,U);
+}
+
+function initValueSetting(){
+	//从cookie载入
+	if(getCookie("K")!=""){
+		K=Number(getCookie("K"));
+		U=Number(getCookie("U"));
+		ALL_TIME=Number(getCookie("ALL_TIME"));
+		AvailableCars_f[1]=Number(getCookie("AvailableCars_f[1]"));
+		AvailableCars_f[2]=Number(getCookie("AvailableCars_f[2]"));
+		$("#input_k").val(K);
+		$("#input_u").val(U);
+		$("#input_at").val(ALL_TIME);
+		$("#input_ac1").val(AvailableCars_f[1]);
+		$("#input_ac2").val(AvailableCars_f[2]);
+	}
+
+	
+
+}
 
 //分析从表格读取的数据并转换为格式化数据 value2Number=>将值转换为数字(不推荐使用)boolean
 function analyseFormData2FormatData(fileData,K,F,U,value2Number){
@@ -76,6 +125,7 @@ function analyseFormData2FormatData(fileData,K,F,U,value2Number){
 
 
 	let a_kfu_i=createNDimArray([K+1,F+1,U+1]);
+	console.error(a_kfu_i)
 	formData_format2NDimArray(a_kfu_i,formData_format["a_kfu"]);
 
 	// console.log(a_kfu_i);
@@ -98,7 +148,7 @@ function analyseFormData2FormatData(fileData,K,F,U,value2Number){
 	let now_k=1;
 	let now_f=1;
 
-	drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,3900,AvailableCars_f);
+	drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,ALL_TIME,AvailableCars_f);
 }
 
 
@@ -123,5 +173,5 @@ function getFormatSub(){
 	return tstr;
 }
 
-
-analyseFormData2FormatData(fileData,K,F,U);
+initValueSetting();
+// analyseFormData2FormatData(fileData,K,F,U);
