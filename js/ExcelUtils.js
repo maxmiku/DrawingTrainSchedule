@@ -35,6 +35,15 @@ function readFile(e) {
 
         GformData=formData;
 
+        if(GformData["绘图常量"]!=undefined){
+            let constantData = GformData["绘图常量"];
+            $("#input_k").val(constantData[0]["K"]);
+            $("#input_u").val(constantData[0]["U"]);
+            $("#input_at").val(constantData[0]["ALL_TIME"]);
+            $("#input_ac1").val(constantData[0]["AvailableCars"]);
+            $("#input_ac2").val(constantData[1]["AvailableCars"]);
+        }
+
         $("#btn-analyse").removeClass("btn-outline-secondary");
         $("#btn-analyse").addClass("btn-success");
 
