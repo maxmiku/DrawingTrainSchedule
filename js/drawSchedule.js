@@ -23,7 +23,7 @@ let frameLineColor="#999";//表线颜色
 let xLabelyOffset=20;//x轴标签 与x轴的距离
 
 
-function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,canvasId){
+function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_i,pa_kfu_i){
 	all_k=K;
 	all_u=U;
 	a_kfu_d=a_kfu_i;
@@ -75,7 +75,8 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,canvasI
 			txtPot=schl[0];
 		}
 		txtPot.x=txtPot.x-3;
-		draw_text(getTrainNumber(1,nowk),txtPot,"bottom","left","bold 1rem 微软雅黑",null,"#0000a0",-50);
+		// draw_text(getTrainNumber(1,nowk),txtPot,"bottom","left","bold 1rem 微软雅黑",null,"#0000a0",-50);
+		draw_text(getTrainNumber(1,nowk),txtPot,"bottom","left",null,null,"#0000a0",-50);
 
 
 		//画下行列车
@@ -95,7 +96,8 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,canvasI
 			txtPot=schl[0];
 		}
 		txtPot.x=txtPot.x-5;
-		draw_text(getTrainNumber(2,nowk),txtPot,"top","left","bold 1rem 微软雅黑",null,"#0000a0",52);
+		// draw_text(getTrainNumber(2,nowk),txtPot,"top","left","bold 1rem 微软雅黑",null,"#0000a0",52);
+		draw_text(getTrainNumber(2,nowk),txtPot,"top","left",null,null,"#0000a0",52);
 
 		// console.log("nowk",nowk,"upavc",availableCars_upward_pot,"downavc",availableCars_downward_pot);
 	}
@@ -109,6 +111,9 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,canvasI
 	for(let i=0;i<availableCars_upward_pot.length;i++){
 		schDraw_carEnd(availableCars_upward_pot[i]);
 	}
+
+	
+	drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i);
 
     $("#btn-analyse").addClass("btn-outline-primary");
     $("#btn-analyse").removeClass("btn-success");
@@ -234,6 +239,45 @@ function getTrainSchPotList(k,f){
 	}
 	
 	return potList;
+}
+
+
+function drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i){
+	for(let nowk=1;nowk<=all_k;nowk++){
+		for(let nowf=1;nowf<=2;nowf++){
+			let passList=getTrainPassengerList(nowk,nowf,pb_kfu_i,pa_kfu_i);
+			
+			let schl=getTrainSchList(nowk,nowf,a_kfu_d,d_kfu_d);
+
+			for(let nowu=1;nowu<passList.length;nowu++){
+				let nowStationSch = schl[nowu];
+				let nowPassList = passList[nowu];
+
+				console.log(nowStationSch,nowu);
+
+
+				let t_pot=clcPot(Number(nowStationSch["a"]),nowu);
+				if(nowf==2){
+					t_pot=clcPot(Number(nowStationSch["a"]),all_u-nowu+1)
+				}else{
+					t_pot.y=t_pot.y-16;
+				}
+				let t_pot_pb=pot(t_pot.x-13,t_pot.y);
+				// t_pot_pb.x=t_pot.x-80;
+				t_pot.x=t_pot.x+13;
+				
+				if(Number(nowPassList["pb"])==0 && Number(nowPassList["pa"])==0){
+					continue;
+				}
+
+				draw_text(nowPassList["pb"],t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#198754");
+
+				draw_text(nowPassList["pa"],t_pot,null,null,"bold 1rem 微软雅黑",null,"#a31515");
+
+				
+			}
+		}
+	}
 }
 
 //在图中指定位置绘制开出列车标志
