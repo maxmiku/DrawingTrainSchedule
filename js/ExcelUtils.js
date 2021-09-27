@@ -31,6 +31,7 @@ function readFile(e) {
             }
         }
         //在控制台打印出来表格中的数据
+        console.log("表格中的数据:");
         console.log(formData);
 
         GformData=formData;
@@ -42,6 +43,14 @@ function readFile(e) {
             $("#input_at").val(constantData[0]["ALL_TIME"]);
             $("#input_ac1").val(constantData[0]["AvailableCars"]);
             $("#input_ac2").val(constantData[1]["AvailableCars"]);
+        }
+
+        $("#DrawPassengerData")[0].disabled=false;
+        if(GformData["pa_kfu"]==undefined){
+            console.log("找不到pa_kfu表,关闭绘制客流数据开关");
+            $("#DrawPassengerData")[0].checked=false;
+        }else{
+            $("#DrawPassengerData")[0].checked=true;
         }
 
         $("#btn-analyse").removeClass("btn-outline-secondary");

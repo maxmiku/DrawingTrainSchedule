@@ -12,23 +12,30 @@
 <div class="card mb-3 mt-2" style="left:1%;width: 98%">
   <div class="card-body">
     <h5 class="card-title">设置参数</h5>
-    <h6 class="card-subtitle mb-2 text-muted">在这里您可以设置绘制列车运行图的相关参数。 留空即为 默认 或 <b>从excel文件中读取(如果文件支持)</b></h6>
-    <div class="input-group mb-3">
-	  <span class="input-group-text" id="basic-addon1">车次数K</span>
-	  <input type="text" id="input_k" class="form-control" placeholder="请设置K值 默认11" aria-label="请设置K值 默认11" aria-describedby="basic-addon1">
-	  <span class="input-group-text" id="basic-addon1">车站数U</span>
-	  <input type="text" id="input_u" class="form-control" placeholder="请设置U值 默认7" aria-label="请设置U值 默认7" aria-describedby="basic-addon1">
-	  <span class="input-group-text" id="basic-addon1">ALL_TIME</span>
-	  <input type="text" id="input_at" class="form-control" placeholder="请设置列车运行图的时间 默认5200" aria-label="请设置列车运行图的时间 默认5200" aria-describedby="basic-addon1">
-	</div>
-	<div class="input-group mb-3">
-	  
-	  <span class="input-group-text" id="basic-addon1">上行可用车底数AvailableCars_f</span>
-	  <input type="text" id="input_ac1" class="form-control" placeholder="请设置上行值 默认6" aria-label="请设置上行值 默认6" aria-describedby="basic-addon1">
-	  <span class="input-group-text" id="basic-addon1">下行可用车底数</span>
+    <h6 class="card-subtitle mb-2 text-muted">在这里您可以设置绘制列车运行图的相关参数。 留空即为 默认 或 <b>从excel文件中读取(如果文件支持)</b> 请确保excel中包含下列数据表:a_kfu d_kfu dw_kfu  以下数据表可选:绘图常量 pa_kfu pb_kfu</h6>
 
-	  <input type="text" id="input_ac2" class="form-control" placeholder="请设置下行值 默认6" aria-label="请设置下行值 默认6" aria-describedby="basic-addon1">
-	</div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">车次数K</span>
+      <input type="text" id="input_k" class="form-control" placeholder="请设置K值 默认11" aria-label="请设置K值 默认11" aria-describedby="basic-addon1">
+      <span class="input-group-text" id="basic-addon1">车站数U</span>
+      <input type="text" id="input_u" class="form-control" placeholder="请设置U值 默认7" aria-label="请设置U值 默认7" aria-describedby="basic-addon1">
+      <span class="input-group-text" id="basic-addon1">ALL_TIME</span>
+      <input type="text" id="input_at" class="form-control" placeholder="请设置列车运行图的时间 默认5200" aria-label="请设置列车运行图的时间 默认5200" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+      
+      <span class="input-group-text" id="basic-addon1">上行可用车底数AvailableCars_f</span>
+      <input type="text" id="input_ac1" class="form-control" placeholder="请设置上行值 默认6" aria-label="请设置上行值 默认6" aria-describedby="basic-addon1">
+      <span class="input-group-text" id="basic-addon1">下行可用车底数</span>
+
+      <input type="text" id="input_ac2" class="form-control" placeholder="请设置下行值 默认6" aria-label="请设置下行值 默认6" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="DrawPassengerData" disabled>
+        <label class="form-check-label" for="DrawPassengerData">绘制客流上下车数据</label>
+      </div>
+    </div>
   </div>
 </div>
 <!-- 参数输入框 -->

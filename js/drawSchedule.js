@@ -243,6 +243,11 @@ function getTrainSchPotList(k,f){
 
 
 function drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i){
+	
+	if(!$("#DrawPassengerData")[0].checked){
+		console.log("跳过绘制客流数据");
+		return;
+	}
 	for(let nowk=1;nowk<=all_k;nowk++){
 		for(let nowf=1;nowf<=2;nowf++){
 			let passList=getTrainPassengerList(nowk,nowf,pb_kfu_i,pa_kfu_i);
@@ -253,7 +258,7 @@ function drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i){
 				let nowStationSch = schl[nowu];
 				let nowPassList = passList[nowu];
 
-				console.log(nowStationSch,nowu);
+				// console.log(nowStationSch,nowu);
 
 
 				let t_pot=clcPot(Number(nowStationSch["a"]),nowu);
@@ -270,15 +275,17 @@ function drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i){
 					continue;
 				}
 
-				draw_text(nowPassList["pb"],t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#198754");
+				draw_text(Math.round(Number(nowPassList["pb"])),t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#198754");
 
-				draw_text(nowPassList["pa"],t_pot,null,null,"bold 1rem 微软雅黑",null,"#a31515");
+				draw_text(Math.round(Number(nowPassList["pa"])),t_pot,null,null,"bold 1rem 微软雅黑",null,"#a31515");
 
 				
 			}
 		}
 	}
 }
+
+
 
 //在图中指定位置绘制开出列车标志
 function schDraw_carStart(spot){

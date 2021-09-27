@@ -145,10 +145,10 @@ function analyseFormData2FormatData(fileData,K,F,U,value2Number){
 	// console.log(dw_kfu_i);
 	// console.log(dw_kfu_i[4][1][4])
 	let pb_kfu_i=createNDimArray([K+1,F+1,U+1]);
-	formData_format2NDimArray(pb_kfu_i,formData_format["上车人数pb_kfu"]);
+	formData_format2NDimArray(pb_kfu_i,formData_format["pb_kfu"]);
 
 	let pa_kfu_i=createNDimArray([K+1,F+1,U+1]);
-	formData_format2NDimArray(pa_kfu_i,formData_format["下车人数pa_kfu"]);
+	formData_format2NDimArray(pa_kfu_i,formData_format["pa_kfu"]);
 
 	let now_k=1;
 	let now_f=1;

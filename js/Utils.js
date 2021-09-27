@@ -26,7 +26,7 @@ function formData_format2NDimArray(targetArray,sourceData){
 	t_conv=sourceData;
 	for (let key in t_conv){
 		let s = key.split(",");
-		console.log(s,t_conv[key],s[0],s[1],s[2],targetArray);
+		// console.log(s,t_conv[key],s[0],s[1],s[2],targetArray);
 		targetArray[s[0]][s[1]][s[2]]=t_conv[key];
 	}
 }
