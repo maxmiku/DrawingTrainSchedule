@@ -7,7 +7,7 @@ let dw_kfu_d;
 let availableCars_f_d;//初始可用车底数 [null,上行,下行]
 
 let allTime_d=3900;//全部时间 单位s
-let timeInterval=300;//每一条竖线的间隔时间 s
+let timeInterval=-1;//每一条竖线的间隔时间 s T_delta动态定义
 let pixelPerSec=(1/2);//每秒数所对应的像素
 let pixelPerStation=100;//每个车站间隔的像素
 
@@ -40,6 +40,8 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 	console.log("重置画布大小",canvas_width,canvas_heigh);
 	resize_canvas(canvas_width,canvas_heigh);
 	draw_rect(pot(0,0),pot(canvas_width,canvas_heigh),"#fff");//画背景
+
+	timeInterval=T_delta;
 
 	draw_frame();
 
@@ -194,10 +196,17 @@ function draw_frame(){
 	//画时间线
 	let maxi=(allTime_d/timeInterval)+1;
 	let spot_y=schBasePot.y+pixelPerStation, epot_y=schBasePot.y+pixelPerStation*all_u;
+	let TimeOffest = -T_0;
 	for(let i=0;i<maxi;i++){
 		let nowx=schBasePot.x+PreForm_DrawSchedule*pixelPerSec+i*pixelPerSec*timeInterval;
 		draw_line(pot(nowx,spot_y),pot(nowx,epot_y),frameLineColor);
 		draw_text(timeInterval*i,pot(nowx,epot_y+xLabelyOffset),"top","center",null,null,frameLineColor);
+		if($("#DrawTime")[0].checked && (i+TimeOffest/timeInterval+1>0)){
+			let nowEndTime=(i+1)*timeInterval;
+			if(nowEndTime<=T_1){
+				draw_text(i+TimeOffest/timeInterval+1,pot(nowx+pixelPerSec*timeInterval/2,epot_y+xLabelyOffset),"top","center",null,null,"#099");
+			}
+		}
 	}
 
 	if(PreForm_DrawSchedule!=0){

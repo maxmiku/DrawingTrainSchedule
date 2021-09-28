@@ -10,6 +10,10 @@ let U=7;
 
 let ALL_TIME=5200;
 
+let T_0=600;//控流开始时段
+let T_1=4200;//控流结束时段
+let T_delta=300;//控流时间间隔
+
 //定义空闲车底数
 let AvailableCars_f=[null,6,6];//[空,上行,下行]
 

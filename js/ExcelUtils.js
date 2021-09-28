@@ -36,6 +36,8 @@ function readFile(e) {
 
         GformData=formData;
 
+        $("#DrawTime")[0].disabled=true;
+        $("#DrawTime")[0].checked=false;
         if(GformData["绘图常量"]!=undefined){
             let constantData = GformData["绘图常量"];
             $("#input_k").val(constantData[0]["K"]);
@@ -43,13 +45,21 @@ function readFile(e) {
             $("#input_at").val(constantData[0]["ALL_TIME"]);
             $("#input_ac1").val(constantData[0]["AvailableCars"]);
             $("#input_ac2").val(constantData[1]["AvailableCars"]);
+            if(constantData[0]["控流时段起止"]!=undefined){
+                $("#DrawTime")[0].disabled=false;
+                $("#DrawTime")[0].checked=true;
+                T_0=constantData[0]["控流时段起止"];
+                T_1=constantData[1]["控流时段起止"];
+                T_delta=constantData[0]["控流时间间隔"];
+            }
         }
 
-        $("#DrawPassengerData")[0].disabled=false;
+        $("#DrawPassengerData")[0].disabled=true;
         if(GformData["pa_kfu"]==undefined){
             console.log("找不到pa_kfu表,关闭绘制客流数据开关");
             $("#DrawPassengerData")[0].checked=false;
         }else{
+            $("#DrawPassengerData")[0].disabled=false;
             $("#DrawPassengerData")[0].checked=true;
         }
 
