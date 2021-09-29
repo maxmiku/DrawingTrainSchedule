@@ -276,17 +276,19 @@ function drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i){
 				}else{
 					t_pot.y=t_pot.y-16;
 				}
-				let t_pot_pb=pot(t_pot.x-13,t_pot.y);
+				let t_pot_pb=pot(t_pot.x,t_pot.y);
 				// t_pot_pb.x=t_pot.x-80;
-				t_pot.x=t_pot.x+13;
+				// t_pot.x=t_pot.x+13;
 				
-				if(Number(nowPassList["pb"])==0 && Number(nowPassList["pa"])==0){
+				if(Number(nowPassList["pb"])==0 && Number(nowPassList["pa"])==0 && !$("#DrawZeroPassengerData")[0].checked){
 					continue;
 				}
 
-				draw_text(Math.round(Number(nowPassList["pb"])),t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#198754");
-
-				draw_text(Math.round(Number(nowPassList["pa"])),t_pot,null,null,"bold 1rem 微软雅黑",null,"#a31515");
+				if(nowf==1){
+					draw_text("["+Math.round(Number(nowPassList["pb"]))+","+Math.round(Number(nowPassList["pa"]))+"]",t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#198754");
+				}else{
+					draw_text("["+Math.round(Number(nowPassList["pb"]))+","+Math.round(Number(nowPassList["pa"]))+"]",t_pot_pb,null,null,"bold 1rem 微软雅黑",null,"#a31515");
+				}
 
 				
 			}
