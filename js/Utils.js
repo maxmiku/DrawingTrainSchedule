@@ -11,9 +11,9 @@ function loopCreateNDimArray(sizeList,nowDim){
 		return null;
 	}
 	let l=sizeList[nowDim];
-	if(nowDim==0){
-		console.error(nowDim,l);
-	}
+	// if(nowDim==0){
+	// 	console.error(nowDim,l);
+	// }
 	let tmp_arr=new Array(l);
 	for (let i=0;i<l;i++){
 		tmp_arr[i]=loopCreateNDimArray(sizeList,nowDim+1);

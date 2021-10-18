@@ -30,7 +30,7 @@
 
       <input type="text" id="input_ac2" class="form-control" placeholder="请设置下行值 默认6" aria-label="请设置下行值 默认6" aria-describedby="basic-addon1">
     </div>
-    <div class="input-group mb-3 row">
+    <div class="input-group mb-3">
       <div class="form-check form-switch col-sm">
         <input class="form-check-input" type="checkbox" id="DrawPassengerData" disabled>
         <label class="form-check-label" for="DrawPassengerData">绘制客流上下车数据</label>
@@ -57,10 +57,21 @@
 </div>
 
 <br/>
-
 <canvas id="tutorial" style="background-color: #fff">
-    你的浏览器不支持 canvas，请升级你的浏览器。
+  你的浏览器不支持 canvas，请升级你的浏览器。
 </canvas>
+
+<div class="mb-3 mt-2">
+  <div class="card-body">
+    <div class="input-group">
+      <span class="input-group-text">log</span>
+      <textarea class="form-control" aria-label="With textarea" style="height: 100px;" id="debugOutput">运行日志输出区域</textarea>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 

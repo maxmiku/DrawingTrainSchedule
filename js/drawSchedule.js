@@ -22,6 +22,7 @@ let schBasePot=pot(80,20);//运行图画图基点
 let frameLineColor="#999";//表线颜色
 let xLabelyOffset=20;//x轴标签 与x轴的距离
 
+let carTurningList=[];//记录列车周转时间
 
 function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_i,pa_kfu_i){
 	all_k=K;
@@ -31,7 +32,8 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 	dw_kfu_d=dw_kfu_i;
 	availableCars_f_d=availableCars;
 	carUturnList=[];//初始化车底折返线的数组
-
+	carTurningList=[];//初始化车底周转时间数组
+	$("#debugOutput").html("正在绘图...");
 	allTime_d=allTime;
 
 	//根据数据重置图的尺寸
@@ -63,7 +65,7 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 		let schl=getTrainSchPotList(nowk,1);
 		draw_lines(schl,"rgba(255,0,0,0.75)");
 
-		if(!analyseCarCirculation(availableCars_upward_pot,availableCars_downward_pot,schl,1)){
+		if(!analyseCarCirculation(availableCars_upward_pot,availableCars_downward_pot,schl,1,nowk)){
 			console.error("运行时出错,在绘制车次k:",nowk,"上行");
 			alert("运行时出错,在绘制车次k:"+nowk+"上行 时");
 			return;
@@ -85,7 +87,7 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 		schl=getTrainSchPotList(nowk,2);
 		draw_lines(schl,"rgba(255,0,0,0.75)");
 
-		if(!analyseCarCirculation(availableCars_downward_pot,availableCars_upward_pot,schl,0)){
+		if(!analyseCarCirculation(availableCars_downward_pot,availableCars_upward_pot,schl,0,nowk)){
 			console.error("运行时出错,在绘制车次k:",nowk,"下行");
 			alert("运行时出错,在绘制车次k:"+nowk+" 下行");
 			return;
@@ -117,6 +119,8 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 	
 	drawPassengerData(all_k,all_u,pb_kfu_i,pa_kfu_i);
 
+	printCarTurningData();
+
     $("#btn-analyse").addClass("btn-outline-primary");
     $("#btn-analyse").removeClass("btn-success");
 
@@ -131,13 +135,29 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 
 }
 
+//输出车底周转数据
+function printCarTurningData(){
+	// debugPrint("列车周转数据");
+	// debugPrint(JSON.stringify(carTurningList));
+	let addup=0;
+	for(i in carTurningList){
+		addup+=carTurningList[i]["time"];
+	}
+	debugPrint("车底周转总时间:"+addup+"s 平均周转时间:"+addup/carTurningList.length+"s 总共计算周转车次数:"+carTurningList.length);
+}
+
+function debugPrint(msg){
+	$("#debugOutput").html($("#debugOutput").html()+"\n"+msg);
+	$("#debugOutput").scrollTop(99999999);
+}
+
 //获取车次号
 function getTrainNumber(f,k){
 	return f*100+k;
 }
 
 //分析折返线和车底流转
-function analyseCarCirculation(availableCars_nowWard_pot,availableCars_oppositeWard_pot,nowSchl,isUpward){
+function analyseCarCirculation(availableCars_nowWard_pot,availableCars_oppositeWard_pot,nowSchl,isUpward,nowk){
 	//isUpward 给1为在上行发车(下行终点站掉头)  0为下行发车(上行终点站掉头)
 	if(availableCars_nowWard_pot.length<1){
 		console.error("运行时出错,无可用车底");
@@ -145,13 +165,25 @@ function analyseCarCirculation(availableCars_nowWard_pot,availableCars_oppositeW
 		return false;
 	}
 	let nowTrain_startPot=nowSchl[0];//当前车辆起始点
-	let nowTrain_endPot=nowSchl[nowSchl.length-1];//当前车辆起始点
+	let nowTrain_endPot=nowSchl[nowSchl.length-1];//当前车辆终点
 
 
 	let nowCar=0;
 	for(nowCar=0;nowCar<availableCars_nowWard_pot.length;nowCar++){
-		let avCar_pot=availableCars_nowWard_pot.shift();
-		// console.log("当前车底安排线路,车底位置:",avCar_pot,"安排方向:up 安排车次:"+nowk,"目的地:",nowSchl[nowSchl.length-1]);
+		let avCar=availableCars_nowWard_pot.shift();
+		let avCar_pot=null;
+		let avCar_k=null;
+		let avCarUTurningTime=0;
+		let frontCarTimeUsing=null;
+		if(avCar!=null){
+			avCar_k=avCar.k;
+			avCar_pot=avCar.pot;
+			avCarUTurningTime=clcTime(nowSchl[nowSchl.length-1].x)-clcTime(avCar_pot.x);
+			frontCarTimeUsing=d_kfu_d[avCar_k][isUpward==1?1:2][all_u]-a_kfu_d[avCar_k][isUpward==1?1:2][1];
+			console.log("前向列车区间运行,车次号:",isUpward==1?"上行":"下行",avCar_k,"所用时间:",d_kfu_d[avCar_k][isUpward==1?1:2][all_u],"-",a_kfu_d[avCar_k][isUpward==1?1:2][1],"=",(d_kfu_d[avCar_k][isUpward==1?1:2][all_u]-a_kfu_d[avCar_k][isUpward==1?1:2][1])," 周转时间:",frontCarTimeUsing+avCarUTurningTime)
+			carTurningList.push({"k":avCar_k,"f":isUpward==1?1:2,"time":frontCarTimeUsing+avCarUTurningTime});
+		}
+		console.log("当前车底安排线路,车底位置:",avCar_pot,"\t\t安排方向(上行?):"+isUpward+"\t安排车次:"+nowCar,"\t目的地:",nowSchl[nowSchl.length-1],"\t车底周转 "+avCar_k+"->"+nowk,"\t车底调头用时:"+avCarUTurningTime);
 		
 		
 		if(avCar_pot==null){
@@ -175,7 +207,7 @@ function analyseCarCirculation(availableCars_nowWard_pot,availableCars_oppositeW
 		alert("运行时出错,无可用车底,可用车底都在发车时间后");
 		return false;
 	}
-	availableCars_oppositeWard_pot.push(nowTrain_endPot);//在下行可用车底 加入此车底
+	availableCars_oppositeWard_pot.push({"k":nowk,"pot":nowTrain_endPot});//在下行可用车底 加入此车底
 
 	return true;
 }
@@ -224,6 +256,11 @@ function clcPot(t,u){
 	if(u>all_u)
 		console.error("clcPot 传入数据 u>all_u t:",t,"u:",u)
 	return pot(schBasePot.x+PreForm_DrawSchedule*pixelPerSec+t*pixelPerSec,schBasePot.y+pixelPerStation*(all_u-u+1));
+}
+
+//通过坐标计算时间
+function clcTime(x){
+	return (x-(schBasePot.x+PreForm_DrawSchedule*pixelPerSec))/pixelPerSec;
 }
 
 //获取指定车次的时刻表对应的点的位置
