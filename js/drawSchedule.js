@@ -11,13 +11,14 @@ let timeInterval=-1;//每一条竖线的间隔时间 s T_delta动态定义
 let pixelPerSec=(1/2);//每秒数所对应的像素
 let pixelPerStation=100;//每个车站间隔的像素
 
-let PreForm_DrawSchedule=150;//表头空出来的区域 时间s
+let PreForm_DrawSchedule=0;//表头空出来的区域 时间s
 
 
 let canvas_width;//画布宽度
 let canvas_heigh;//画布高度
 
-let schBasePot=pot(80,20);//运行图画图基点
+let schBasePot=pot(120,20);//运行图画图基点
+// let schBasePot=pot(80,20);//运行图画图基点
 
 let frameLineColor="#999";//表线颜色
 let xLabelyOffset=20;//x轴标签 与x轴的距离
@@ -109,11 +110,12 @@ function drawSchedule(a_kfu_i,d_kfu_i,dw_kfu_i,K,U,allTime,availableCars,pb_kfu_
 	schDraw_inner_drawCarUturn();//将记录的列车运行线画到图上
 
 	//绘制收车标志
+	// console.log("收车标志绘制",availableCars_upward_pot,availableCars_downward_pot)
 	for(let i=0;i<availableCars_downward_pot.length;i++){
-		schDraw_carEnd(availableCars_downward_pot[i]);
+		schDraw_carEnd(availableCars_downward_pot[i]["pot"]);
 	}
 	for(let i=0;i<availableCars_upward_pot.length;i++){
-		schDraw_carEnd(availableCars_upward_pot[i]);
+		schDraw_carEnd(availableCars_upward_pot[i]["pot"]);
 	}
 
 	
@@ -219,7 +221,7 @@ function draw_frame(){
 	//画车站横线
 	for(let i=1;i<all_u+1;i++){
 		draw_line(pot(schBasePot.x,schBasePot.y+pixelPerStation*i),pot(schBasePot.x+PreForm_DrawSchedule*pixelPerSec+allTime_d*pixelPerSec,schBasePot.y+pixelPerStation*i),frameLineColor);
-		draw_text(all_u-i+1+"("+(i)+")",pot(schBasePot.x-10,schBasePot.y+pixelPerStation*i),"middle","right",null,null,frameLineColor);
+		draw_text(all_u-i+1+"("+(i)+")",pot(schBasePot.x-60,schBasePot.y+pixelPerStation*i),"middle","right",null,null,frameLineColor);
 	}
 	// console.log(pixelPerStation*-1)
 	draw_text("列车运行图",pot(schBasePot.x-10,schBasePot.y),"buttom","left",null,null,frameLineColor);
